@@ -47,7 +47,10 @@ create table invoice (
     first_name varchar not null,
     last_name varchar not null,
     insurance_number varchar not null,
-    birthday varchar not null
+    birthday varchar not null,
+    month integer not null,
+    year integer not null,
+    
    
 );
 
