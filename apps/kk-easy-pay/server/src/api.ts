@@ -14,9 +14,9 @@ export class ApiHandlers {
     res.send(pakete);
   }
 
-  async handleListInvoice(_req: express.Request, res: express.Response) {
+  async handleListInvoices(_req: express.Request, res: express.Response) {
     const entries = await this.knex.transaction(async (trx) => {
-      return new AppDbService(trx).loadInvoice();
+      return new AppDbService(trx).loadInvoices();
     });
 
     res.send(entries);

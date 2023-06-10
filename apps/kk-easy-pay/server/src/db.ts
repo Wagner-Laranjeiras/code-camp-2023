@@ -56,6 +56,8 @@ interface InvoiceRow {
   last_name: string;
   insurance_number: string;
   birthday: string;
+  month: number;
+  year: number;
 }
 
 interface InvoiceEntryRow {
@@ -72,18 +74,35 @@ export class AppDbService {
     return rows;
   }
 
-  async loadInvoice() {
+  async loadInvoices() {
     const entryRows = await this.trx<InvoiceEntryRow>(APP_TABLES.INVOICE_ENTRY);
     const invoiceRows = await this.trx<InvoiceRow>(APP_TABLES.INVOICE);
-    for (const invoiceRow of invoiceRows) {
-      // const invoice: Invoice = {
-      // firstName: invoiceRow.first_name,
-      // lastName: invoiceRow.last_name,
-      // };
-      invoiceRow;
-      entryRows;
-    }
-    return [];
+    const leistungsPaketRows = await this.trx<LeistungsPaket>(
+      APP_TABLES.LEISTUNGS_PAKET
+    );
+    const invoices: Invoice[] = invoiceRows.map((invoiceRow) => ({
+      firstName: invoiceRow.first_name,
+      lastName: invoiceRow.last_name,
+      birthday: invoiceRow.birthday,
+      id: invoiceRow.id,
+      insuranceNumber: invoiceRow.insurance_number,
+      month: invoiceRow.month,
+      year: invoiceRow.year,
+      entries: entryRows
+        .filter((entryRow) => entryRow.invoice_id === invoiceRow.id)
+        .map(
+          (entryRow): InvoiceEntry => ({
+            amount: entryRow.amount,
+            id: entryRow.invoice_id,
+            paket: leistungsPaketRows.find(
+              (leistungsPaketRow) =>
+                leistungsPaketRow.nr === entryRow.leistungspaket_nr
+            ),
+          })
+        ),
+    }));
+
+    return invoices;
   }
 
   async createInvoice(invoice: Invoice) {
@@ -93,6 +112,8 @@ export class AppDbService {
       id: invoice.id,
       last_name: invoice.lastName,
       insurance_number: invoice.insuranceNumber,
+      month: invoice.month,
+      year: invoice.year,
     };
 
     const invoiceEntryRows: InvoiceEntryRow[] = invoice.entries.map(
