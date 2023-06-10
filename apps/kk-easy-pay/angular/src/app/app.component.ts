@@ -13,8 +13,10 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     const pakete = await this.entry.listPakete();
+    // const invoices = await this.entry.listInvoices();
 
     console.log(pakete);
+    // console.log(invoices);
 
     // TODO as a first demo show how to build a basic page that shows the entries
   }

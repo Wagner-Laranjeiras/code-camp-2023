@@ -1,5 +1,5 @@
 import { knex, Knex } from 'knex';
-import { LeistungsPaket } from '@pct/kk-easy-pay-common';
+import { Invoice, LeistungsPaket } from '@pct/kk-easy-pay-common';
 import pg from 'pg';
 
 if (pg.types == null) {
@@ -58,5 +58,9 @@ export class AppDbService {
 
   async loadInvoice() {
     return [];
+  }
+
+  async createInvoice(invoice: Invoice) {
+    return { method: 'POST', body: JSON.stringify({}) };
   }
 }

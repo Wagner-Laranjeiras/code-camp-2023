@@ -14,4 +14,11 @@ export class EntryService {
       this.http.get<LeistungsPaket[]>('/api/listpakete')
     );
   }
+  async listInvoices() {
+    return await firstValueFrom(
+      this.http.get<LeistungsPaket[]>('/api/createinvoice')
+    );
+  }
+
+  // await fetch ("/api/createinvoice", {method:"POST", body:JSON.stringify({hallo:42}), headers:{ "Content-Type": "application/json"}})
 }
