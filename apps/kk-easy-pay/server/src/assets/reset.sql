@@ -37,3 +37,28 @@ insert into leistungs_paket (nr, description, price) VALUES (28, 'Begleitung bei
 insert into leistungs_paket (nr, description, price) VALUES (29, 'Wechseln der Bettwäsche', 514);
 insert into leistungs_paket (nr, description, price) VALUES (30, 'Vorratseinkauf', 1218);
 insert into leistungs_paket (nr, description, price) VALUES (31, 'Erstbesuch', 6431);
+
+-- get more Tables
+--Template / first table:
+-- create table leistungs_paket (
+--     nr integer primary key,
+--     description varchar not null,
+--     price integer not null
+-- );
+
+create table invoice (
+    id integer primary key,
+    first_name varchar not null,
+    last_name varchar not null,
+    insurance_number varchar not null,
+    birthday varchar not null,
+   
+);
+
+create table invoice_entry (
+    -- primary key noch setzen
+    invoice_id integer foreign key references invoice(id),
+    leistungspaket_nr integer foreign key references leistungs_paket(nr),
+    amount integer not null
+   
+);
