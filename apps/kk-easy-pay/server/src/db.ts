@@ -1,5 +1,5 @@
 import { knex, Knex } from 'knex';
-import { LeistungsPaket } from '@pct/kk-easy-pay-common';
+import { LeistungsPaket, InvoiceEntry, Invoice } from '@pct/kk-easy-pay-common';
 import pg from 'pg';
 
 if (pg.types == null) {
@@ -46,7 +46,23 @@ export async function initKnex() {
 
 export const APP_TABLES = {
   LEISTUNGS_PAKET: 'leistungs_paket',
+  INVOICE_ENTRY: 'invoice_entry',
+  INVOICE: 'invoice',
 };
+
+interface InvoiceRow {
+  id: number;
+  first_name: string;
+  last_name: string;
+  insurance_number: string;
+  birthday: string;
+}
+
+interface InvoiceEntryRow {
+  invoice_id: number;
+  leistungspaket_nr: number;
+  amount: number;
+}
 
 export class AppDbService {
   constructor(private trx: Knex.Transaction) {}
@@ -57,6 +73,18 @@ export class AppDbService {
   }
 
   async loadInvoice() {
+    const entryRows = await this.trx<InvoiceEntryRow>(APP_TABLES.INVOICE_ENTRY);
+    const invoiceRows = await this.trx<InvoiceRow>(APP_TABLES.INVOICE);
+    for (const invoiceRow of invoiceRows) {
+      const invoice: Invoice = {
+        firstName: invoiceRow.first_name,
+        lastName: invoiceRow.last_name,
+      };
+    }
+    return [];
+  }
+
+  async createInvoice() {
     return [];
   }
 }
