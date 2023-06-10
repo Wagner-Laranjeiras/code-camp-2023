@@ -13,6 +13,14 @@ export class ApiHandlers {
     res.json(pakete);
   }
 
+  async handleListInvoice(_req: express.Request, res: express.Response) {
+    const pakete = await this.knex.transaction(async (trx) => {
+      return new AppDbService(trx).loadInvoice();
+    });
+
+    res.json(pakete);
+  }
+
   // This call must only have public functions that have exactly the two req and res parameters!
   // private helper functions are allowed!
 }
