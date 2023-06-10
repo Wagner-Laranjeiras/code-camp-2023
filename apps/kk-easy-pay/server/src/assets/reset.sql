@@ -1,4 +1,6 @@
 drop table if exists leistungs_paket;
+drop table if exists invoice;
+drop table if exists invoice_entry;
 
 create table leistungs_paket (
     nr integer primary key,
@@ -51,14 +53,15 @@ create table invoice (
     first_name varchar not null,
     last_name varchar not null,
     insurance_number varchar not null,
-    birthday varchar not null,
+    birthday varchar not null
    
 );
 
 create table invoice_entry (
-    -- primary key noch setzen
-    invoice_id integer foreign key references invoice(id),
-    leistungspaket_nr integer foreign key references leistungs_paket(nr),
-    amount integer not null
+
+    invoice_id integer references invoice(id),
+    leistungspaket_nr integer references leistungs_paket(nr),
+    amount integer not null,
+    primary key(invoice_id, leistungspaket_nr)
    
 );
