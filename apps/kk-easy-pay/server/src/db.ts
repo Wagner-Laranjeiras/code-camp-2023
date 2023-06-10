@@ -86,11 +86,31 @@ export class AppDbService {
     return [];
   }
 
-  async createInvoice() {
-    return [];
-  }
-
   async createInvoice(invoice: Invoice) {
-    return { method: 'POST', body: JSON.stringify({}) };
+    const invoiceRow: InvoiceRow = {
+      birthday: invoice.birthday,
+      first_name: invoice.firstName,
+      id: invoice.id,
+      last_name: invoice.lastName,
+      insurance_number: invoice.insuranceNumber,
+    };
+
+    const invoiceEntryRows: InvoiceEntryRow[] = invoice.entries.map(
+      (entry) => ({
+        amount: entry.amount,
+        invoice_id: entry.id,
+        leistungspaket_nr: entry.paket.nr,
+      })
+    );
+    try {
+      await this.trx<InvoiceEntryRow>(APP_TABLES.INVOICE_ENTRY).insert(
+        invoiceEntryRows
+      );
+      await this.trx<InvoiceRow>(APP_TABLES.INVOICE).insert(invoiceRow);
+    } catch {
+      return 'WARNING ERROR';
+    }
+
+    return 200;
   }
 }

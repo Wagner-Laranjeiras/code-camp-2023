@@ -11,7 +11,7 @@ export class ApiHandlers {
       return new AppDbService(trx).loadPakete();
     });
 
-    res.json(pakete);
+    res.send(pakete);
   }
 
   async handleListInvoice(_req: express.Request, res: express.Response) {
@@ -19,7 +19,7 @@ export class ApiHandlers {
       return new AppDbService(trx).loadInvoice();
     });
 
-    res.json(entries);
+    res.send(entries);
   }
 
   async handleCreateInvoice(_req: express.Request, res: express.Response) {
@@ -27,7 +27,7 @@ export class ApiHandlers {
     const invoices = await this.knex.transaction(async (trx) => {
       return new AppDbService(trx).createInvoice(invoice);
     });
-    res.json(invoices);
+    res.send(invoices);
   }
 
   // This call must only have public functions that have exactly the two req and res parameters!
