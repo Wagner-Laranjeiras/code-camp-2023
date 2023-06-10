@@ -76,10 +76,12 @@ export class AppDbService {
     const entryRows = await this.trx<InvoiceEntryRow>(APP_TABLES.INVOICE_ENTRY);
     const invoiceRows = await this.trx<InvoiceRow>(APP_TABLES.INVOICE);
     for (const invoiceRow of invoiceRows) {
-      const invoice: Invoice = {
-        firstName: invoiceRow.first_name,
-        lastName: invoiceRow.last_name,
-      };
+      // const invoice: Invoice = {
+      // firstName: invoiceRow.first_name,
+      // lastName: invoiceRow.last_name,
+      // };
+      invoiceRow;
+      entryRows;
     }
     return [];
   }
