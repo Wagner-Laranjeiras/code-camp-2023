@@ -9,7 +9,7 @@ function registerHandlers(
   registerHandler: (path: string, handlerName: keyof ApiHandlers) => void
 ) {
   registerHandler('/api/listpakete', 'handleListPakete');
-  registerHandler('/api/???', 'handleListInvoice');
+  registerHandler('/api/listinvoice', 'handleListInvoice');
   // TODO to add more APIs you can write new functions in the ApiHandlers calls
   // then add a call to registerHandler here to add a mapping to a URL of the server
   // The URL must start with /api/
