@@ -74,7 +74,7 @@ export class AppDbService {
     return rows;
   }
 
-  async loadInvoice() {
+  async loadInvoices() {
     const entryRows = await this.trx<InvoiceEntryRow>(APP_TABLES.INVOICE_ENTRY);
     const invoiceRows = await this.trx<InvoiceRow>(APP_TABLES.INVOICE);
     const leistungsPaketRows = await this.trx<LeistungsPaket>(
