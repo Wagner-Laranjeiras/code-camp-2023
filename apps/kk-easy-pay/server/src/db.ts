@@ -55,4 +55,8 @@ export class AppDbService {
     const rows = await this.trx<LeistungsPaket>(APP_TABLES.LEISTUNGS_PAKET);
     return rows;
   }
+
+  async loadInvoice() {
+    return [];
+  }
 }
